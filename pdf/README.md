@@ -1,0 +1,8 @@
+- esp32-s3_datasheet_cn.pdf
+	- https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_datasheet_cn.pdf
+- esp32-s3_technical_reference_manual_cn.pdf
+	- https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3_technical_reference_manual_cn.pdf
+- esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf
+	- https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf
+- TopPower-TP5400.pdf
+	- http://www.tpwic.com/uploadfile/2013/1205/20131205120457334.pdf
