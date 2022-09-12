@@ -6,6 +6,12 @@
     "target/esp32s3.cfg"
   ],
   "files.associations": {
-    "gpio.h": "c"
+    "gpio.h": "c",
+    "stdio.h": "c",
+    "ssp.h": "c",
+    "cdefs.h": "c",
+    "stddef.h": "c",
+    "st7789.h": "c",
+    "cstdio": "c"
   }
 }
