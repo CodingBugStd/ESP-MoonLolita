@@ -4,7 +4,7 @@
   "name": "ESP32-MoonLolita-PCB",
   "content": "实习期间自己尝试制作一块用于学习lvgl的板子",
   "created_at": "2022-09-04 15:08:27",
-  "updated_at": "2022-09-11 21:11:55",
+  "updated_at": "2022-09-14 23:38:58",
   "stick": "",
   "documents": [
     {
@@ -16,7 +16,6 @@
       "thumb": "/images/thumb-default.png",
       "components": {
         "852f2d298d044a5890434de60c0b159b": 1,
-        "10246975547a40f7b288c82d5bb63e51": 1,
         "908ced202529416bac1203a9b300d842": 1,
         "72935fd9984c4b56a59640e39bf9e91f": 1,
         "97f98bee1ea84a58ac9a9e5816f0800c": 5,
@@ -25,12 +24,22 @@
         "fcc39099b8dc42709caa5971ac551490": 1,
         "5592f11f2a4c4d53861c7f2ae31427c2": 1,
         "1cdd6c39609140d5a1532570c8a1890d": 2,
-        "2592edbbd14c45a7af3f3ee9b7a69706": 2,
+        "2592edbbd14c45a7af3f3ee9b7a69706": 1,
         "b20f486c6a2b4f42b93ece1e3f467c74": 1,
         "4fc1ffc9620946d38a85b02a0590499e": 1,
         "06e03792456c4882a197602c046eb548": 1,
         "d596be980114421aa40a1a82196f2e81": 1,
-        "a29c3c155cee441e8ebfc2f245491658": 3
+        "a29c3c155cee441e8ebfc2f245491658": 3,
+        "b309b0e27a7d4bfa8f835cb13cc2fffd": 1,
+        "fca7d9ded10e4985a633a4aa45b72f4b": 1,
+        "d0c6177b0fe24e56a86986dd9463bfec": 1,
+        "0a8c6fb7997b48e880d7c57dc5687ffe": 2,
+        "7abc1616c20e44d8a7f49768d1dc6a69": 1,
+        "a2776a885e3e4cab9681a250bf6b4fe6": 1,
+        "c194c2a2887b455fb8e445d3676c787e": 4,
+        "e5b83ec1296a4be8b1239fe954452570": 1,
+        "7e71d7e7fc4ab7699970e6bc28fb6314": 1,
+        "e1720912f83ce3984fa4d79fdbf51ca0": 1
       },
       "BOM": [
         [
@@ -41,18 +50,152 @@
           "CustomPara"
         ],
         [
-          "跳线帽",
+          "10uF",
           1,
-          "KEY-SMD_KSS-2G",
-          "BOOT_KEY",
+          "C_0603",
+          "BATC1",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "b10e8c6624104581806b76d45846c96d",
+            "uuid": "c194c2a2887b455fb8e445d3676c787e"
+          }
+        ],
+        [
+          "0.1uF",
+          2,
+          "C_0603",
+          "BATC2,BATC4",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "b10e8c6624104581806b76d45846c96d",
+            "uuid": "c194c2a2887b455fb8e445d3676c787e"
+          }
+        ],
+        [
+          "22uF",
+          1,
+          "C_0805",
+          "BATC3",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "8adc254eeeb14194a70d20f5f500f3e0",
+            "uuid": "c194c2a2887b455fb8e445d3676c787e"
+          }
+        ],
+        [
+          "47uF",
+          1,
+          "CASE-B_3528",
+          "BATC5",
           {
             "BOM_Supplier": "LCSC",
-            "BOM_Supplier Part": "C221798",
-            "BOM_Manufacturer": "C&K",
-            "BOM_Manufacturer Part": "KSS341GLFS",
-            "BOM_JLCPCB Part Class": "Extended Part",
-            "puuid": "313a799616fd47d4b652b47d76f030e7",
-            "uuid": "2592edbbd14c45a7af3f3ee9b7a69706"
+            "BOM_Manufacturer": "AVX",
+            "BOM_Manufacturer Part": "TAJB476K010RNJ",
+            "BOM_Supplier Part": "C22036",
+            "BOM_LCSC Assembly": "Yes",
+            "puuid": "61a4dd13416c4c309578824d9c019fe3",
+            "uuid": "e1720912f83ce3984fa4d79fdbf51ca0"
+          }
+        ],
+        [
+          "SS32",
+          1,
+          "SMA(DO-214AC)",
+          "BATD1",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer Part": "SS32",
+            "BOM_Manufacturer": "MDD",
+            "BOM_Supplier Part": "C34897",
+            "BOM_LCSC Assembly": "Yes",
+            "puuid": "47ae497da1a54d66a78c117a6b7b7697",
+            "uuid": "7e71d7e7fc4ab7699970e6bc28fb6314"
+          }
+        ],
+        [
+          "4.7uH",
+          1,
+          "CDRH74R",
+          "BATL1",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "9c2c1e25ffa54eef98442bc72c3c647d",
+            "uuid": "e5b83ec1296a4be8b1239fe954452570"
+          }
+        ],
+        [
+          "LED-Green(0603)",
+          1,
+          "LED_0603",
+          "BATLED1",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Foshan NationStar Optoelectronics",
+            "BOM_Manufacturer Part": "FC-DA1608UGK-520D10",
+            "BOM_Supplier Part": "C84267",
+            "puuid": "f02170614b7f46a1a793beb147d3af2c",
+            "uuid": "7abc1616c20e44d8a7f49768d1dc6a69"
+          }
+        ],
+        [
+          "LED-Red(0603)",
+          1,
+          "LED_0603",
+          "BATLED2",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Hubei KENTO Elec",
+            "BOM_Manufacturer Part": "KT-0603R",
+            "BOM_Supplier Part": "C2286",
+            "puuid": "f02170614b7f46a1a793beb147d3af2c",
+            "uuid": "a2776a885e3e4cab9681a250bf6b4fe6"
+          }
+        ],
+        [
+          "0.3Ω",
+          1,
+          "R_0805",
+          "BATR1",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "f5f9872c4c40453096226f8cd1a9027d",
+            "uuid": "fca7d9ded10e4985a633a4aa45b72f4b"
+          }
+        ],
+        [
+          "1k",
+          1,
+          "R_0603",
+          "BATR2",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "1f3388c9005a4170ad135ab8823fa6d5",
+            "uuid": "0a8c6fb7997b48e880d7c57dc5687ffe"
+          }
+        ],
+        [
+          "1.2k",
+          1,
+          "R_0603",
+          "BATR3",
+          {
+            "BOM_Manufacturer Part": "?",
+            "puuid": "1f3388c9005a4170ad135ab8823fa6d5",
+            "uuid": "0a8c6fb7997b48e880d7c57dc5687ffe"
+          }
+        ],
+        [
+          "TP5400",
+          1,
+          "SOIC-8_EP_150MIL",
+          "BATU1",
+          {
+            "BOM_Supplier Part": "C24154",
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "TOPPOWER",
+            "BOM_Manufacturer Part": "TP5400",
+            "puuid": "c495782c609b4757770368bf47992630",
+            "uuid": "d0c6177b0fe24e56a86986dd9463bfec"
           }
         ],
         [
@@ -228,21 +371,6 @@
           }
         ],
         [
-          "TP5400",
-          1,
-          "SOIC-8_L5.0-W4.0-P1.27-LS6.0-BL-EP2.0",
-          "U1",
-          {
-            "BOM_Supplier": "LCSC",
-            "BOM_Manufacturer": "TOPPOWER",
-            "BOM_Manufacturer Part": "TP5400",
-            "BOM_Supplier Part": "C24154",
-            "BOM_JLCPCB Part Class": "Extended Part",
-            "puuid": "28567f11fb074058be55438afffc79f9",
-            "uuid": "10246975547a40f7b288c82d5bb63e51"
-          }
-        ],
-        [
           "AMS1117-3.3V",
           1,
           "SOT-223-4_L6.5-W3.5-P2.30-LS7.0-BR",
@@ -316,18 +444,67 @@
             "puuid": "601701952aa247dbacc19e7bcfa7cfcc",
             "uuid": "4fc1ffc9620946d38a85b02a0590499e"
           }
+        ],
+        [
+          "跳帽",
+          1,
+          "CON-2",
+          "U7",
+          {
+            "BOM_Manufacturer": "",
+            "BOM_Manufacturer Part": "",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "puuid": "dbd43a0ed3e6471fa638af08cc116962",
+            "uuid": "b309b0e27a7d4bfa8f835cb13cc2fffd"
+          }
         ]
       ],
-      "updateTime": 1662901534,
+      "updateTime": 1663169938,
       "createTime": 1662275308,
       "histories": [],
       "created_at": "2022-09-04 15:08:28",
-      "updated_at": "2022-09-11 21:05:34"
+      "updated_at": "2022-09-14 23:38:58"
+    },
+    {
+      "uuid": "4692d32b8e23348059a58657583c95f8",
+      "puuid": "4485cd94dc1ebf197c4d284535d00ba5",
+      "title": "ESP32-MoonLolita-PCBDoc",
+      "filename": "ESP32-MoonLolita-PCBDoc.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "5c00be6d4c7a4852b226e0a3637c1b39": 3,
+        "cb77d904356143e1bae81db5a65be1d1": 1,
+        "7bf07f842b60475fbf1ad36041be0c97": 1,
+        "8998fd74fbb24c3e86093c90754d4a73": 1,
+        "50dc3b6111d549ddb6686d77ab1ebdd8": 2,
+        "4e86de3e87f34d3192daaa0c7a80448f": 5,
+        "8e9b1be4bcb6420dbd1d09bf04b02792": 1,
+        "313a799616fd47d4b652b47d76f030e7": 1,
+        "cf0de4027c8d4e52b95614b9a18c2f76": 1,
+        "af756987f54d45668f36be44c16fc195": 1,
+        "28567f11fb074058be55438afffc79f9": 1,
+        "09952c2799c54b76904e264324ada8f3": 1,
+        "80f55466c5b449cd8bd7bd5528907ee0": 1,
+        "ab49e53fa4d74644b4aa02901fed392e": 1,
+        "4a2f1031624d44d2afcb6fe0ad11c8bb": 1,
+        "601701952aa247dbacc19e7bcfa7cfcc": 1,
+        "dbd43a0ed3e6471fa638af08cc116962": 1
+      },
+      "BOM": [],
+      "updateTime": 1662981003,
+      "createTime": 1662981003,
+      "histories": [],
+      "created_at": "2022-09-12 19:10:03",
+      "updated_at": "2022-09-12 19:10:03"
     }
   ],
   "sort": [],
   "title": "ESP32-MoonLolita-PCB",
   "foldername": "ESP32-MoonLolita-PCB",
   "schfilename": "ESP32-MoonLolita-PCB.json",
-  "schfilemtime": 1662901534365
+  "schfilemtime": 1663169938723
 }

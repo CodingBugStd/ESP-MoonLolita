@@ -1,2 +1,4 @@
-idf_component_register(SRCS "main.c"
-                    INCLUDE_DIRS ".")
+idf_component_register(SRC_DIRS     "."
+                                    "lv_support"
+                    INCLUDE_DIRS    "." 
+                                    "lv_support")

@@ -12,6 +12,12 @@
     "cdefs.h": "c",
     "stddef.h": "c",
     "st7789.h": "c",
-    "cstdio": "c"
+    "cstdio": "c",
+    "lv_theme_default.h": "c",
+    "lvgl.h": "c",
+    "lv_disp.h": "c",
+    "lv_driver.h": "c",
+    "lv_support.h": "c",
+    "esp_timer.h": "c"
   }
 }
