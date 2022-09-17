@@ -1,4 +1,4 @@
 idf_component_register(SRC_DIRS     "."
-                                    "lv_support"
+                                    "board_support/lv_support"
                     INCLUDE_DIRS    "." 
-                                    "lv_support")
+                                    "board_support/lv_support")

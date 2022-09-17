@@ -3,6 +3,5 @@
 
 void lv_support_init();
 
-
 #endif  //_LV_SUPPORT_H_
 

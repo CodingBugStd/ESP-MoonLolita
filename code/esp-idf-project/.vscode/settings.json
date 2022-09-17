@@ -18,6 +18,8 @@
     "lv_disp.h": "c",
     "lv_driver.h": "c",
     "lv_support.h": "c",
-    "esp_timer.h": "c"
+    "esp_timer.h": "c",
+    "esp_lcd_panel_vendor.h": "c",
+    "esp_lcd_panel_io.h": "c"
   }
 }
