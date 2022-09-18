@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "lv_support.h"
+#include "moon_lolita_board_v1_support.h"
 
 void app_main(void)
 {

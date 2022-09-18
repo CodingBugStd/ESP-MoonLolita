@@ -20,6 +20,10 @@
     "lv_support.h": "c",
     "esp_timer.h": "c",
     "esp_lcd_panel_vendor.h": "c",
-    "esp_lcd_panel_io.h": "c"
+    "esp_lcd_panel_io.h": "c",
+    "moon_lolita_board_v1_support.h": "c",
+    "system_error": "c",
+    "typeinfo": "c",
+    "esp_lcd_panel_ops.h": "c"
   }
 }

@@ -6,3 +6,5 @@
 	- https://www.espressif.com.cn/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_cn.pdf
 - TopPower-TP5400.pdf
 	- http://www.tpwic.com/uploadfile/2013/1205/20131205120457334.pdf
+- Sensirion_Humidity_Sensors_SHTC3_Datasheet.pdf
+	- https://sensirion.com/media/documents/643F9C8E/6164081E/Sensirion_Humidity_Sensors_SHTC3_Datasheet.pdf
