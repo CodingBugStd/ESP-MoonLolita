@@ -5,13 +5,12 @@
 extern "C"{ 
 #endif
 
-#include "aw9523b/aw9523b.h"
-#include "bit_io/bit_io.h"
-#include "es8388/es8388.h"
-#include "led/led.h"
-#include "lv_support/lv_support.h"
-#include "mpu6050/mpu6050.h"
-#include "shtc3/shtc3.h"
+#include "device/aw9523b/aw9523b.h"
+#include "device/es8388/es8388.h"
+#include "device/led/led.h"
+#include "device/lvgl_support/lvgl_support.h"
+#include "device/mpu6050/mpu6050.h"
+#include "device/shtc3/shtc3.h"
 
 #ifdef __cplusplus
 }

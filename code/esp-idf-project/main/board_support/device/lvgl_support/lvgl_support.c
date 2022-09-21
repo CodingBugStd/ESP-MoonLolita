@@ -1,4 +1,4 @@
-#include "lv_support.h"
+#include "lvgl_support.h"
 #include "esp_timer.h"
 #include "lvgl.h"
 #include "esp_lcd_panel_io.h"
