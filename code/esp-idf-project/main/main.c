@@ -3,6 +3,7 @@
 
 void app_main(void)
 {
+    bsp_i2c_init();
     lv_support_init();
     printf("helloWorld!"); 
 }

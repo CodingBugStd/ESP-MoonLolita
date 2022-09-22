@@ -5,6 +5,8 @@
 extern "C"{ 
 #endif
 
+#include "peripheral/bsp_i2c/bsp_i2c.h"
+
 #include "device/aw9523b/aw9523b.h"
 #include "device/es8388/es8388.h"
 #include "device/led/led.h"
