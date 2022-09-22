@@ -4,7 +4,7 @@
   "name": "ESP32-MoonLolita-PCB",
   "content": "实习期间自己尝试制作一块用于学习lvgl的板子",
   "created_at": "2022-09-04 15:08:27",
-  "updated_at": "2022-09-14 23:38:58",
+  "updated_at": "2022-09-22 23:01:24",
   "stick": "",
   "documents": [
     {
@@ -28,7 +28,7 @@
         "b20f486c6a2b4f42b93ece1e3f467c74": 1,
         "4fc1ffc9620946d38a85b02a0590499e": 1,
         "06e03792456c4882a197602c046eb548": 1,
-        "d596be980114421aa40a1a82196f2e81": 1,
+        "d596be980114421aa40a1a82196f2e81": 5,
         "a29c3c155cee441e8ebfc2f245491658": 3,
         "b309b0e27a7d4bfa8f835cb13cc2fffd": 1,
         "fca7d9ded10e4985a633a4aa45b72f4b": 1,
@@ -39,7 +39,9 @@
         "c194c2a2887b455fb8e445d3676c787e": 4,
         "e5b83ec1296a4be8b1239fe954452570": 1,
         "7e71d7e7fc4ab7699970e6bc28fb6314": 1,
-        "e1720912f83ce3984fa4d79fdbf51ca0": 1
+        "e1720912f83ce3984fa4d79fdbf51ca0": 1,
+        "bc164a32e9734397b7a25e387104ffc8": 2,
+        "b7362148ada94a80886f1c0eb018f676": 1
       },
       "BOM": [
         [
@@ -244,6 +246,51 @@
           }
         ],
         [
+          "22uF",
+          1,
+          "CAP-SMD_L3.5-W2.8",
+          "C4",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C600508",
+            "BOM_Manufacturer": "KEMET",
+            "BOM_Manufacturer Part": "T491B226M006AT",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "6a42a6e6689040c3931da12afd77a8b2",
+            "uuid": "bc164a32e9734397b7a25e387104ffc8"
+          }
+        ],
+        [
+          "10uF",
+          1,
+          "CAP-SMD_L3.5-W2.8",
+          "C5",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C600508",
+            "BOM_Manufacturer": "KEMET",
+            "BOM_Manufacturer Part": "T491B226M006AT",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "6a42a6e6689040c3931da12afd77a8b2",
+            "uuid": "bc164a32e9734397b7a25e387104ffc8"
+          }
+        ],
+        [
+          "100nF",
+          1,
+          "C0603",
+          "C6",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C597110",
+            "BOM_Manufacturer": "AVX",
+            "BOM_Manufacturer Part": "06033A102JAT2A",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "f8151fdc728a41ebbc304e11d39e5437",
+            "uuid": "b7362148ada94a80886f1c0eb018f676"
+          }
+        ],
+        [
           "TF-01A_C2889258",
           1,
           "TF-SMD_TF-02",
@@ -314,9 +361,9 @@
         ],
         [
           "10K",
-          1,
+          5,
           "R1206",
-          "R5",
+          "R5,R7,R8,R9,R10",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Supplier Part": "C247391",
@@ -460,11 +507,11 @@
           }
         ]
       ],
-      "updateTime": 1663169938,
+      "updateTime": 1663858884,
       "createTime": 1662275308,
       "histories": [],
       "created_at": "2022-09-04 15:08:28",
-      "updated_at": "2022-09-14 23:38:58"
+      "updated_at": "2022-09-22 23:01:24"
     },
     {
       "uuid": "4692d32b8e23348059a58657583c95f8",
@@ -506,5 +553,5 @@
   "title": "ESP32-MoonLolita-PCB",
   "foldername": "ESP32-MoonLolita-PCB",
   "schfilename": "ESP32-MoonLolita-PCB.json",
-  "schfilemtime": 1663169938723
+  "schfilemtime": 1663858884719
 }
