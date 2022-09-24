@@ -9,6 +9,7 @@
         "bsp_i2c.h": "c",
         "bsp_sdcard.h": "c",
         "esp_vfs_fat.h": "c",
-        "stat.h": "c"
+        "stat.h": "c",
+        "esp_lcd_panel_io.h": "c"
     }
 }
