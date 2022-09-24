@@ -4,6 +4,7 @@
 void app_main(void)
 {
     bsp_i2c_init();
+    bsp_sdcard_init();
     lv_support_init();
     printf("helloWorld!"); 
 }

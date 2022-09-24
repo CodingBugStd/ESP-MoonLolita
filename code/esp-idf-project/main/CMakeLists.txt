@@ -1,6 +1,7 @@
 #main组件板级支持包源文件
 set( BOARD_SUPPORT_SRC_DIRS
     "board_support/peripheral/bsp_i2c"
+    "board_support/peripheral/bsp_sdcard"
     "board_support/peripheral/bsp_usb_cdc"
     "board_support/peripheral/bsp_bt"
     "board_support/peripheral/bsp_wifi"

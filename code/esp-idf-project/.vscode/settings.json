@@ -5,6 +5,10 @@
         "string": "c",
         "string_view": "c",
         "*.ipp": "c",
-        "moon_lolita_board_v1_support.h": "c"
+        "moon_lolita_board_v1_support.h": "c",
+        "bsp_i2c.h": "c",
+        "bsp_sdcard.h": "c",
+        "esp_vfs_fat.h": "c",
+        "stat.h": "c"
     }
 }
