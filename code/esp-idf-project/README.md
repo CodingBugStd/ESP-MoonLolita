@@ -1,32 +1,37 @@
-# _Sample project_
+# ESP-MoonLolita
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+​	基于esp-idf开发的一块能联网的多功能桌面摆件。
 
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
-
+[TOC]
 
 
-## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
 
-## Example folder contents
+## 1、组件(components)
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+- LolitaAppFrame:应用层框架
+- MoonLolita-BSP:板级支持包
+- lvgl:开源GUI
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
+### 1.1、LolitaAppFrame Components
 
-Below is short explanation of remaining files in the project folder.
+### 1.2、MoonLolita-BSP Components
 
-```
-├── CMakeLists.txt
-├── main
-│   ├── CMakeLists.txt
-│   └── main.c
-└── README.md                  This is the file you are currently reading
-```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
+**片上外设:**
+
+> peripheral/bsp_bt : 蓝牙，用于辅助配网以及数据传输等。
+> peripheral/bsp_i2c : i2c总线，用于操作总线上的i2c器件。
+> peripheral/bsp_nvs : nvs存储，用于保存重要设置到片内flash中。
+> periphera/bsp_sdcard : sd卡驱动，挂载sd卡到vfs上，用于存储大块数据、图片、音频以及.bin文件。
+> periphera/bsp_usb_cdc : usb驱动，用于与上位机通讯、自定义usb升级。
+> peripheral/bsp_wifi : wifi，联网、ota升级、mqtt通讯、对接网络API接口。
+
+**外围器件:**
+
+> device/adc_keyboard : ADC键盘驱动。
+> device/aw9523b : 数组io口拓展芯片。
+> device/es8388 : 音频解码。
+> device/led : RGB呼吸灯控制
+> device/lvgl_support : idf原生lcd驱动，用于驱动触摸屏以及对接LVGL。
+> device/mpu6050 : 陀螺仪，摇晃唤醒以及姿态解算。
+> device/shtc3 : 温湿度传感器。
+

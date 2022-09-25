@@ -7,6 +7,8 @@ extern "C"{
 
 #include "peripheral/bsp_i2c/bsp_i2c.h"
 #include "peripheral/bsp_sdcard/bsp_sdcard.h"
+#include "peripheral/bsp_nvs/bsp_nvs.h"
+#include "peripheral/bsp_usb_cdc/bsp_usb_cdc.h"
 
 #include "device/aw9523b/aw9523b.h"
 #include "device/es8388/es8388.h"
