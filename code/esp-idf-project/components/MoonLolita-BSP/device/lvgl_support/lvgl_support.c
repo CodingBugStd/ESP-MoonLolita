@@ -116,7 +116,7 @@ static void _lv_tick_init(){
     esp_timer_start_periodic(_timer,LV_TICK_INC*1000);
 }
 
-void lv_support_init(){
+void lvgl_support_init(){
     _lcd_panel_handle_init();
     _lcd_init();
     lv_init();

@@ -2,7 +2,7 @@
 #define _LV_SUPPORT_H_
 
 #define LV_TICK_INC     10
-
+ 
 #define LCD_PIN_NUM_DC          0
 #define LCD_PIN_NUM_PCLK        1
 #define LCD_PIN_NUM_CS          2
@@ -21,7 +21,7 @@
 #define LCD_WIDTH   320
 #define LCD_HIGH    240
 
-void lv_support_init();
+void lvgl_support_init();
 
 #endif  //_LV_SUPPORT_H_
 
