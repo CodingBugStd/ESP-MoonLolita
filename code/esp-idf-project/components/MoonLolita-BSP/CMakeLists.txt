@@ -6,6 +6,8 @@ set( BOARD_SUPPORT_SRC_DIRS
     "peripheral/bsp_bt"
     "peripheral/bsp_wifi"
     "peripheral/bsp_nvs"
+    "peripheral/bsp_ledc"
+    "peripheral/bsp_i2s"
     "device/aw9523b"
     "device/es8388"
     "device/led"

@@ -8,9 +8,11 @@
 
 ## 1、组件(components)
 
-- LolitaAppFrame:应用层框架
-- MoonLolita-BSP:板级支持包
-- lvgl:开源GUI
+- LolitaAppFrame : 应用层框架
+- MoonLolita-BSP : 板级支持包
+- MoonLolita-Ui : 用户界面
+
+- lvgl : 开源GUI
 
 ### 1.1、LolitaAppFrame Components
 
@@ -38,11 +40,15 @@
 >
 > device/es8388 : 音频解码。
 >
-> device/led : RGB呼吸灯控制
+> device/led : RGB呼吸灯控制。
 >
-> device/lvgl_support : idf原生lcd驱动，用于驱动触摸屏以及对接LVGL。
+> device/lvgl_support : idf原生lcd和TP的驱动，用于驱动触摸屏以及对接LVGL。
 >
 > device/mpu6050 : 陀螺仪，摇晃唤醒以及姿态解算。
 >
 > device/shtc3 : 温湿度传感器。
+
+### 1.3、MoonLolita-Ui Components
+
+
 

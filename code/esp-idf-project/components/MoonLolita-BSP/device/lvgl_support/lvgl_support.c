@@ -5,6 +5,10 @@
 #include "esp_lcd_panel_vendor.h"   //使用idf原生st7789驱动
 #include "esp_lcd_panel_ops.h"
 
+#include "esp_log.h"
+
+#define TAG "bsp-lvgl_support"
+
 static esp_timer_handle_t   _timer = NULL; 
 static lv_disp_draw_buf_t disp_buf;
 static lv_color_t buf_1[LCD_WIDTH * 10];

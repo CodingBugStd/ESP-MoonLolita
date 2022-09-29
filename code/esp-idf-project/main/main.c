@@ -9,6 +9,7 @@ void app_main(void)
 {   
     bsp_i2c_init();
     bsp_sdcard_init();
+    bsp_ledc_init();
     bsp_nvs_init();
     bsp_usb_cdc_init();
  
