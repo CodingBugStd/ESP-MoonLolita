@@ -48,7 +48,28 @@
 >
 > device/shtc3 : 温湿度传感器。
 
-### 1.3、MoonLolita-Ui Components
+### 1.3、MoonLolita-UI Components
 
 
 
+## 2、LolitaAppFrame设计思路
+
+​	LolitaAppFrame是为了更加快速、简单、便捷、规范的移植和开发嵌入式系统应用层所设计的一套应用层框架。
+
+​	大四机电工程专业学生狗设计，不合理的地方轻点喷。QAQ！
+
+### 2.1、BOOT
+
+1. 调用llt_app_frame_init()初始化框架。
+2. 通过llt_function_regist()注册所有能实现的function并且关联其对应的Service。
+3. 通过LolitaAppFrame接口启动App。
+4. App运行时会向LolitaAppFrame请求实现某些功能，AppFrame则会启动、管理相关服务以实现其请求的功能。
+
+### 2.2、层级
+
+1. App层
+	顶层应用，通过LolitaAppFrame启动。上面仅存在用户逻辑，通过LolitaAppFrame去实现其具体功能。
+2. Service层
+	服务层，为App提供具体的功能实现。本层与App层通过LolitaAppFrame解耦。
+3. HAL层
+	硬件抽象层，为Service提供操作硬件的接口。
