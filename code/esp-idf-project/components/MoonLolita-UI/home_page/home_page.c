@@ -32,8 +32,7 @@ static void home_page_create(){
 
     screen = lv_img_create( NULL );
 
-    //LV_IMG_DECLARE( img1 );
-    //lv_img_set_src( screen , &img1 );
+    lv_img_set_src( screen , "A:sdcard/img/test.png" );
 
     lable_create( screen );
     button_create( screen );

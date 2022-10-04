@@ -33,7 +33,7 @@
  *=========================*/
 
 /*Enable and configure the built-in memory manager*/
-#define LV_USE_BUILTIN_MALLOC 1
+#define LV_USE_BUILTIN_MALLOC 0
 #if LV_USE_BUILTIN_MALLOC
     /*Size of the memory available for `lv_malloc()` in bytes (>= 2kB)*/
     #define LV_MEM_SIZE (128U * 1024U)          /*[bytes]*/
@@ -57,11 +57,11 @@
 #endif  /*LV_USE_BUILTIN_SNPRINTF*/
 
 #define LV_STDLIB_INCLUDE <stdint.h>
-#define LV_MALLOC       lv_malloc_builtin
-#define LV_REALLOC      lv_realloc_builtin
-#define LV_FREE         lv_free_builtin
-#define LV_MEMSET       lv_memset_builtin
-#define LV_MEMCPY       lv_memcpy_builtin
+#define LV_MALLOC       malloc
+#define LV_REALLOC      realloc
+#define LV_FREE         free
+#define LV_MEMSET       memset
+#define LV_MEMCPY       memcpy
 #define LV_SNPRINTF     lv_snprintf_builtin
 #define LV_VSNPRINTF    lv_vsnprintf_builtin
 #define LV_STRLEN       lv_strlen_builtin
@@ -576,7 +576,7 @@
 /*API for fopen, fread, etc*/
 #define LV_USE_FS_STDIO 1
 #if LV_USE_FS_STDIO
-    #define LV_FS_STDIO_LETTER '\0'     /*Set an upper cased letter on which the drive will accessible (e.g. 'A')*/
+    #define LV_FS_STDIO_LETTER 'A'     /*Set an upper cased letter on which the drive will accessible (e.g. 'A')*/
     #define LV_FS_STDIO_PATH ""         /*Set the working directory. File/directory paths will be appended to it.*/
     #define LV_FS_STDIO_CACHE_SIZE 0    /*>0 to cache this number of bytes in lv_fs_read()*/
 #endif
