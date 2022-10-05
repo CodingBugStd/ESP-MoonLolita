@@ -210,18 +210,6 @@ void lv_disp_set_bg_opa(lv_disp_t * disp, lv_opa_t opa)
     _lv_inv_area(disp, &a);
 }
 
-lv_color_t lv_disp_get_chroma_key_color(lv_disp_t * disp)
-{
-
-    if(!disp) disp = lv_disp_get_default();
-    if(!disp) {
-        LV_LOG_WARN("no display registered");
-        return lv_color_hex(0x00ff00);
-    }
-
-    return disp->driver->color_chroma_key;
-}
-
 /**
  * Switch screen with animation
  * @param scr pointer to the new screen to load
@@ -232,6 +220,7 @@ lv_color_t lv_disp_get_chroma_key_color(lv_disp_t * disp)
  */
 void lv_scr_load_anim(lv_obj_t * new_scr, lv_scr_load_anim_t anim_type, uint32_t time, uint32_t delay, bool auto_del)
 {
+
     lv_disp_t * d = lv_obj_get_disp(new_scr);
     lv_obj_t * act_scr = lv_scr_act();
 
@@ -272,9 +261,7 @@ void lv_scr_load_anim(lv_obj_t * new_scr, lv_scr_load_anim_t anim_type, uint32_t
 
     /*Shortcut for immediate load*/
     if(time == 0 && delay == 0) {
-
         scr_load_internal(new_scr);
-        if(auto_del) lv_obj_del(act_scr);
         return;
     }
 

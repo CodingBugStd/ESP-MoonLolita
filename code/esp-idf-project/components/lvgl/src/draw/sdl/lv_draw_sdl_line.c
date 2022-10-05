@@ -8,7 +8,7 @@
  *********************/
 #include "../../lv_conf_internal.h"
 
-#if LV_USE_DRAW_SDL
+#if LV_USE_GPU_SDL
 
 #include "lv_draw_sdl.h"
 #include "lv_draw_sdl_utils.h"
@@ -110,7 +110,7 @@ void lv_draw_sdl_draw_line(lv_draw_ctx_t * draw_ctx, const lv_draw_line_dsc_t * 
 static lv_draw_line_key_t line_key_create(const lv_draw_line_dsc_t * dsc, lv_coord_t length)
 {
     lv_draw_line_key_t key;
-    lv_memzero(&key, sizeof(lv_draw_line_key_t));
+    lv_memset_00(&key, sizeof(lv_draw_line_key_t));
     key.magic = LV_GPU_CACHE_KEY_MAGIC_LINE;
     key.length = length;
     key.width = dsc->width;
@@ -126,10 +126,7 @@ static SDL_Texture * line_texture_create(lv_draw_sdl_ctx_t * sdl_ctx, const lv_d
     SDL_SetRenderTarget(sdl_ctx->renderer, texture);
     SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(sdl_ctx->renderer, 0xFF, 0xFF, 0xFF, 0x0);
-    /* SDL_RenderClear is not working properly, so we overwrite the target with solid color */
-    SDL_SetRenderDrawBlendMode(sdl_ctx->renderer, SDL_BLENDMODE_NONE);
-    SDL_RenderFillRect(sdl_ctx->renderer, NULL);
-    SDL_SetRenderDrawBlendMode(sdl_ctx->renderer, SDL_BLENDMODE_BLEND);
+    SDL_RenderClear(sdl_ctx->renderer);
     SDL_SetRenderDrawColor(sdl_ctx->renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_Rect line_rect = {1 + dsc->width / 2, 1, length, dsc->width};
     SDL_RenderFillRect(sdl_ctx->renderer, &line_rect);
@@ -154,4 +151,4 @@ static SDL_Texture * line_texture_create(lv_draw_sdl_ctx_t * sdl_ctx, const lv_d
     return texture;
 }
 
-#endif /*LV_USE_DRAW_SDL*/
+#endif /*LV_USE_GPU_SDL*/
