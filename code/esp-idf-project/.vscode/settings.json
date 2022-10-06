@@ -10,7 +10,16 @@
         "bsp_sdcard.h": "c",
         "esp_vfs_fat.h": "c",
         "stat.h": "c",
-        "esp_lcd_panel_io.h": "c"
+        "esp_lcd_panel_io.h": "c",
+        "bsp_nvs.h": "c",
+        "bsp_usb_cdc.h": "c",
+        "bsp_ledc.h": "c",
+        "aw9523b.h": "c",
+        "es8388.h": "c",
+        "led.h": "c",
+        "mpu6050.h": "c",
+        "lvgl_support.h": "c",
+        "moon_lolita_ui.h": "c"
     },
     "idf.portWin": "COM10"
 }

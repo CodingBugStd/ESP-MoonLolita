@@ -5,8 +5,7 @@
 extern "C"  {
 #endif
 
-#include "home_page/home_page.h"
-
+#include "./home_page/home_page.h"
 
 #ifdef __cplusplus
 }
