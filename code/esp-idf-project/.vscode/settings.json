@@ -21,5 +21,6 @@
         "lvgl_support.h": "c",
         "moon_lolita_ui.h": "c"
     },
-    "idf.portWin": "COM10"
+    "idf.portWin": "COM7",
+    "idf.flashType": "UART"
 }

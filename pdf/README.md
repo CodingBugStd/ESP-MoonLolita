@@ -8,3 +8,5 @@
 	- http://www.tpwic.com/uploadfile/2013/1205/20131205120457334.pdf
 - Sensirion_Humidity_Sensors_SHTC3_Datasheet.pdf
 	- https://sensirion.com/media/documents/643F9C8E/6164081E/Sensirion_Humidity_Sensors_SHTC3_Datasheet.pdf
+- 测试用最小系统板资料
+	- https://pan.baidu.com/s/1P1gHK9cx-vi5zjqa5McTuw?from=init#list/path=%2F	提取码:6666
