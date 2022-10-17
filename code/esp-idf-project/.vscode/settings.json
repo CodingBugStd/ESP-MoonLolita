@@ -19,7 +19,8 @@
         "led.h": "c",
         "mpu6050.h": "c",
         "lvgl_support.h": "c",
-        "moon_lolita_ui.h": "c"
+        "moon_lolita_ui.h": "c",
+        "home_page.h": "c"
     },
     "idf.portWin": "COM7",
     "idf.flashType": "UART"

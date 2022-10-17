@@ -23,4 +23,4 @@ set( BOARD_SUPPORT_INCLUDE_DIRS
 
 idf_component_register(SRC_DIRS ${BOARD_SUPPORT_SRC_DIRS}
                     INCLUDE_DIRS ${BOARD_SUPPORT_INCLUDE_DIRS}
-                    REQUIRES lvgl esp_lcd fatfs)
+                    REQUIRES lvgl esp_lcd fatfs tinyusb)
