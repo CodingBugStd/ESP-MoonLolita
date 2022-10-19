@@ -20,7 +20,9 @@
         "mpu6050.h": "c",
         "lvgl_support.h": "c",
         "moon_lolita_ui.h": "c",
-        "home_page.h": "c"
+        "home_page.h": "c",
+        "string.h": "c",
+        "cstring": "c"
     },
     "idf.portWin": "COM7",
     "idf.flashType": "UART"

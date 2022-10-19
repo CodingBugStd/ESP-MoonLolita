@@ -21,33 +21,36 @@ static void system_led_task(void * args ){
     }
 }
 
-#include "string.h"
+static void cdc_callback(uint8_t *buf,uint8_t len){
+    bsp_usb_cdc_send( buf ,len);
+    bsp_usb_cdc_clear_rx_buffer();
+}
+
 static TaskHandle_t usb_taskhandle = NULL;
 static void usb_task(void* args){
+    bsp_usb_cdc_init();
+    bsp_usb_cdc_register_recieve_callback( cdc_callback );
     while(1){
         vTaskDelay(500/portTICK_PERIOD_MS);
-        bsp_usb_cdc_send( (uint8_t*)args , strlen((char*)args) );
     }
+}
+
+#include "string.h"
+static void nvs_test(){
+    bsp_nvs_init();
+    bsp_nvs_set( "Test" , (uint8_t*)"HelloWorld!" , strlen("HelloWorld!")+1 );
+    char teast[32];
+    bsp_nvs_get( "Test" , (uint8_t*)teast , 32 );
+    bsp_usb_cdc_send( (uint8_t*)teast , strlen(teast) );
 }
 
 void app_main(void)
 {   
-    //bsp_i2c_init();
-    //bsp_sdcard_init();
-    //bsp_ledc_init();
-    //bsp_nvs_init();
-    bsp_usb_cdc_init();
- 
-    //shtc3_wakeup();
-    //lvgl_support_init();
-
-    //home_page_load();
-
-    
+    nvs_test();
     xTaskCreate(
         usb_task,
         "usb",
-        1 * 1024,
+        4 * 1024,
         "HelloWorld!\r\n",
         12,
         &usb_taskhandle
