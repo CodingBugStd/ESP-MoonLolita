@@ -57,6 +57,10 @@ esp_err_t bsp_usb_cdc_init(){
         return ret;
     }
 
+    uint8_t dump = 0xff;
+
+    bsp_usb_cdc_send( &dump , 1 );
+
     return ret;
 }
 
