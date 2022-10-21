@@ -35,26 +35,12 @@ static void usb_task(void* args){
     }
 }
 
-#include "string.h"
-static void nvs_test(){
-    bsp_nvs_init();
-    bsp_nvs_set( "Test" , (uint8_t*)"HelloWorld!" , strlen("HelloWorld!")+1 );
-    char teast[32];
-    bsp_nvs_get( "Test" , (uint8_t*)teast , 32 );
-    bsp_usb_cdc_send( (uint8_t*)teast , strlen(teast) );
-}
-
 void app_main(void)
 {   
-    nvs_test();
-    xTaskCreate(
-        usb_task,
-        "usb",
-        4 * 1024,
-        "HelloWorld!\r\n",
-        12,
-        &usb_taskhandle
-    );
+    bsp_nvs_init();
+    if( bsp_nvs_check() == ESP_OK ){
+        ESP_LOGI(TAG , "nvs ok");
+    }
 
     xTaskCreate( 
         system_led_task ,
