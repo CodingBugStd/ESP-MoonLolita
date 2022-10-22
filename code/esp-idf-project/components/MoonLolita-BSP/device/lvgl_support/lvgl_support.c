@@ -1,55 +1,117 @@
 #include "lvgl_support.h"
-#include "esp_timer.h"
-#include "lvgl.h"
+
+#include "esp_log.h"
+#include "driver/gpio.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_vendor.h"   //使用idf原生st7789驱动
 #include "esp_lcd_panel_ops.h"
+#include "freertos\FreeRTOS.h"
+#include "freertos\task.h"
 
-#include "esp_log.h"
+#define TAG "lvgl_support"
 
-#define TAG "bsp-lvgl_support"
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////// Please update the following configuration according to your LCD spec //////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#define LCD_PIXEL_CLOCK_HZ     (8 * 1000 * 1000)
+#define LCD_BK_LIGHT_ON_LEVEL      1
+#define LCD_BK_LIGHT_OFF_LEVEL !LCD_BK_LIGHT_ON_LEVEL
+#define LCD_PIN_NUM_DATA0          8
+#define LCD_PIN_NUM_DATA1          3
+#define LCD_PIN_NUM_DATA2          11
+#define LCD_PIN_NUM_DATA3          10
+#define LCD_PIN_NUM_DATA4          9
+#define LCD_PIN_NUM_DATA5          12
+#define LCD_PIN_NUM_DATA6          46
+#define LCD_PIN_NUM_DATA7          13
+#define LCD_PIN_NUM_PCLK           16
+#define LCD_PIN_NUM_CS             17
+#define LCD_PIN_NUM_DC             40
+#define LCD_PIN_NUM_RST            18
+#define LCD_PIN_NUM_BK_LIGHT       14
 
-static esp_timer_handle_t   _timer = NULL; 
-static lv_disp_draw_buf_t disp_buf;
-static lv_color_t buf_1[LCD_WIDTH * 10];
-static lv_color_t buf_2[LCD_WIDTH * 10];
-static lv_disp_drv_t disp_drv;
-static lv_disp_t * disp = NULL;
+// The pixel number in horizontal and vertical
+#define LCD_H_RES              240
+#define LCD_V_RES              320
+// Bit number used to represent command and parameter
+#define LCD_CMD_BITS           8
+#define LCD_PARAM_BITS         8
 
-static esp_lcd_i80_bus_handle_t _bus_handle = NULL;  //总线句柄 8线并口
-static esp_lcd_i80_bus_handle_t _io_handle = NULL;   //io句柄
-static esp_lcd_panel_handle_t _panel_handle = NULL;  //屏幕句柄
+#define LVGL_TICK_PERIOD_MS    2
 
-//LCD 控制器 颜色发送完毕回调  用于通知lvgl颜色刷写完毕 -> lv_disp_flush_ready
-static bool _notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
+static esp_lcd_panel_handle_t   panel_handle = NULL;
+static esp_timer_handle_t       lvgl_tick_timer = NULL;
+
+static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
+static lv_disp_drv_t disp_drv;      // contains callback functions
+static lv_disp_t* disp = NULL;
+
+static bool bsp_notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
     lv_disp_drv_t *disp_driver = (lv_disp_drv_t *)user_ctx;
     lv_disp_flush_ready(disp_driver);
     return false;
 }
 
-//ESP32S3 LCD Controller
-static void _lcd_panel_handle_init(){
-    //LCD 8080接口初始化
+static void bsp_lvgl_flush_cb(lv_disp_drv_t *drv, const lv_area_t *area, lv_color_t *color_map)
+{
+    //esp_lcd_panel_handle_t panel_handle = (esp_lcd_panel_handle_t) drv->user_data;
+    int offsetx1 = area->x1;
+    int offsetx2 = area->x2;
+    int offsety1 = area->y1;
+    int offsety2 = area->y2;
+    // copy a buffer's content to a specific area of the display
+    esp_lcd_panel_draw_bitmap(panel_handle, offsetx1, offsety1, offsetx2 + 1, offsety2 + 1, color_map);
+}
+
+static void bsp_increase_lvgl_tick(void *arg)
+{
+    /* Tell LVGL how many milliseconds has elapsed */
+    lv_tick_inc(LVGL_TICK_PERIOD_MS);
+}
+
+static TaskHandle_t bsp_lvgl_handle_taskHandle = NULL;
+static void bsp_lvgl_handle_task( void *arg ){
+    while(1){
+        lv_timer_handler();
+        vTaskDelay( 10 / portTICK_PERIOD_MS );
+    }
+}
+
+static void peripheral_init(){
+    //背光GPIO初始化
+    ESP_LOGI(TAG, "Turn off LCD backlight");
+    gpio_config_t bk_gpio_config = {
+        .mode = GPIO_MODE_OUTPUT,
+        .pin_bit_mask = 1ULL << LCD_PIN_NUM_BK_LIGHT
+    };
+    ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
+    gpio_set_level(LCD_PIN_NUM_BK_LIGHT, LCD_BK_LIGHT_OFF_LEVEL);
+
+    //i80bus
+    ESP_LOGI(TAG, "Initialize Intel 8080 bus");
+    esp_lcd_i80_bus_handle_t i80_bus = NULL;
     esp_lcd_i80_bus_config_t bus_config = {
         .dc_gpio_num = LCD_PIN_NUM_DC,
         .wr_gpio_num = LCD_PIN_NUM_PCLK,
         .data_gpio_nums = {
-            LCD_DATA_PIN_NUM_DATA0,
-            LCD_DATA_PIN_NUM_DATA1,
-            LCD_DATA_PIN_NUM_DATA2,
-            LCD_DATA_PIN_NUM_DATA3,
-            LCD_DATA_PIN_NUM_DATA4,
-            LCD_DATA_PIN_NUM_DATA5,
-            LCD_DATA_PIN_NUM_DATA6,
-            LCD_DATA_PIN_NUM_DATA7,
+            LCD_PIN_NUM_DATA0,
+            LCD_PIN_NUM_DATA1,
+            LCD_PIN_NUM_DATA2,
+            LCD_PIN_NUM_DATA3,
+            LCD_PIN_NUM_DATA4,
+            LCD_PIN_NUM_DATA5,
+            LCD_PIN_NUM_DATA6,
+            LCD_PIN_NUM_DATA7,
         },
         .bus_width = 8,
-        .max_transfer_bytes = LCD_WIDTH * 40 * sizeof(uint16_t)
+        .max_transfer_bytes = LCD_H_RES * 40 * sizeof(uint16_t)
     };
-    esp_lcd_new_i80_bus(&bus_config, &_bus_handle);
+    ESP_ERROR_CHECK(esp_lcd_new_i80_bus(&bus_config, &i80_bus));
 
-    //LCD IO 初始化
+    //i80 io handle
+    ESP_LOGI(TAG, "Initialize Intel 8080 bus io handle");
+    esp_lcd_panel_io_handle_t io_handle = NULL;
     esp_lcd_panel_io_i80_config_t io_config = {
         .cs_gpio_num = LCD_PIN_NUM_CS,
         .pclk_hz = LCD_PIXEL_CLOCK_HZ,
@@ -60,71 +122,88 @@ static void _lcd_panel_handle_init(){
             .dc_dummy_level = 0,
             .dc_data_level = 1,
         },
-        .on_color_trans_done = _notify_lvgl_flush_ready,
+        .on_color_trans_done = bsp_notify_lvgl_flush_ready,
         .user_ctx = &disp_drv,
-        .lcd_cmd_bits = 8,
-        .lcd_param_bits = 8,
+        .lcd_cmd_bits = LCD_CMD_BITS,
+        .lcd_param_bits = LCD_PARAM_BITS,
     };
-    esp_lcd_new_panel_io_i80(_bus_handle, &io_config, &_io_handle);
+    ESP_ERROR_CHECK(esp_lcd_new_panel_io_i80(i80_bus, &io_config, &io_handle));
 
-    //LCD 句柄初始化
+    ESP_LOGI(TAG, "Install LCD driver of st7789");
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = LCD_PIN_NUM_RST,
         .color_space = ESP_LCD_COLOR_SPACE_RGB,
         .bits_per_pixel = 16,
     };
-    esp_lcd_new_panel_st7789(_io_handle, &panel_config, &_panel_handle);
+    ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
 }
 
-static void _lcd_init(){
-    //复位
-    esp_lcd_panel_reset(_panel_handle);
-    esp_lcd_panel_init(_panel_handle);
-    //色彩倒置
-    esp_lcd_panel_invert_color(_panel_handle, true);
-    //像素点间距
-    esp_lcd_panel_set_gap(_panel_handle, 0, 0);
+static void st7789_init(){
+    ESP_LOGI(TAG, "ST7789 reset");
+    esp_lcd_panel_reset(panel_handle);
+    esp_lcd_panel_init(panel_handle);
+    esp_lcd_panel_invert_color(panel_handle, true);
+    // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
+    esp_lcd_panel_set_gap(panel_handle, 0, 20);
+    ESP_LOGI(TAG, "Turn on LCD backlight");
+    gpio_set_level(LCD_PIN_NUM_BK_LIGHT, LCD_BK_LIGHT_ON_LEVEL);
 }
 
-static void _lv_flush_callback(){
-
+static void lv_buff_init(){
+    ESP_LOGI(TAG, "Initialize LVGL library");
+    // alloc draw buffers used by LVGL
+    // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
+    lv_color_t *buf1 = heap_caps_malloc(LCD_H_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    assert(buf1);
+    lv_color_t *buf2 = heap_caps_malloc(LCD_H_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    assert(buf2);
+    // initialize LVGL draw buffers
+    lv_disp_draw_buf_init(&disp_buf, buf1, buf2, LCD_H_RES * 20);
 }
 
-static void _lv_driver_init(){
-    lv_disp_draw_buf_init(&disp_buf, buf_1, buf_2, LCD_WIDTH*10);
+static void lv_disp_register(){
+    ESP_LOGI(TAG, "Register display driver to LVGL");
     lv_disp_drv_init(&disp_drv);
+    disp_drv.hor_res = LCD_H_RES;
+    disp_drv.ver_res = LCD_V_RES;
+    disp_drv.flush_cb = bsp_lvgl_flush_cb;
     disp_drv.draw_buf = &disp_buf;
-    disp_drv.flush_cb = _lv_flush_callback;
-    disp_drv.hor_res = LCD_WIDTH;
-    disp_drv.ver_res = LCD_HIGH;
-}
-
-static void _lv_register_driver(){
+    disp_drv.user_data = panel_handle;
     disp = lv_disp_drv_register(&disp_drv);
 }
 
-static void _timer_callback(void *args){
-    lv_tick_inc(LV_TICK_INC);
-    lv_timer_handler();
+static void lv_inc_timer_init(){
+    ESP_LOGI(TAG, "Install LVGL tick timer");
+    // Tick interface for LVGL (using esp_timer to generate 2ms periodic event)
+    const esp_timer_create_args_t lvgl_tick_timer_args = {
+        .callback = &bsp_increase_lvgl_tick,
+        .name = "lvgl_tick"
+    };
+    ESP_ERROR_CHECK(esp_timer_create(&lvgl_tick_timer_args, &lvgl_tick_timer));
+    ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, LVGL_TICK_PERIOD_MS * 1000));
 }
 
-static void _lv_tick_init(){
-    if(_timer)  return;
-    esp_timer_create_args_t args;
-    args.callback = _timer_callback;
-    args.name = "lv_tick";
-    args.arg = NULL;
-    args.dispatch_method = ESP_TIMER_TASK;
-    args.skip_unhandled_events = false;
-    esp_timer_create(&args , &_timer);
-    esp_timer_start_periodic(_timer,LV_TICK_INC*1000);
-}
+#include "string.h"
 
 void lvgl_support_init(){
-    _lcd_panel_handle_init();
-    _lcd_init();
+    peripheral_init();
+    st7789_init();
     lv_init();
-    _lv_driver_init();
-    _lv_register_driver();
-    _lv_tick_init();
+    lv_buff_init();
+    lv_disp_register();
+    lv_inc_timer_init();
+
+    //首先执行一次lv_timer_handler!
+    //因为是异步执行handler 所以会导致一次handler没有执行就调用lv_src_load()
+    lv_timer_handler();
+
+    xTaskCreate(
+        bsp_lvgl_handle_task,
+        "lvgl",
+        16 * 1024,
+        NULL,
+        2,
+        &bsp_lvgl_handle_taskHandle
+    );
 }
+

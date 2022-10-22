@@ -22,7 +22,11 @@
         "moon_lolita_ui.h": "c",
         "home_page.h": "c",
         "string.h": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "freertos.h": "c",
+        "st7789.h": "c",
+        "esp_lcd_panel_vendor.h": "c",
+        "task.h": "c"
     },
     "idf.portWin": "COM7",
     "idf.flashType": "UART"

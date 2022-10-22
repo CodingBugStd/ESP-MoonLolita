@@ -3,6 +3,8 @@
 #include "moon_lolita_board_v1_support.h"
 #include "moon_lolita_ui.h"
 
+#include "lvgl.h"
+
 #include "freertos\FreeRTOS.h"
 #include "freertos\task.h"
 
@@ -23,30 +25,17 @@ static void system_led_task(void * args ){
     }
 }
 
-static void cdc_callback(uint8_t *buf,uint8_t len){
-    bsp_usb_cdc_send( buf ,len);
-    bsp_usb_cdc_clear_rx_buffer();
-}
-
-static TaskHandle_t usb_taskhandle = NULL;
-static void usb_task(void* args){
-    bsp_usb_cdc_init();
-    bsp_usb_cdc_register_recieve_callback( cdc_callback );
-    while(1){
-        vTaskDelay(500/portTICK_PERIOD_MS);
-    }
-}
-
 void app_main(void)
 {   
-    xTaskCreate(
-        usb_task,
-        "usb",
-        4 * 1024,
-        NULL,
-        12,
-        usb_taskhandle
-    );
+    ESP_LOGW(TAG,"This version under development.");
+
+    lvgl_support_init();
+
+    lv_obj_t *page = lv_obj_create( NULL );
+
+    lv_obj_set_size( page , 240 , 320 );
+    lv_obj_set_style_bg_color( page , lv_palette_main(LV_PALETTE_BLUE) , LV_PART_MAIN );
+    lv_scr_load( page );
 
     xTaskCreate( 
         system_led_task ,
@@ -57,5 +46,5 @@ void app_main(void)
         &system_led_taskhandle
     );
 
-    ESP_LOGW(TAG,"This version under development.");
+    while( vTaskDelay(1) , 1 );
 }
