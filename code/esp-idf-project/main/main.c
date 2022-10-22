@@ -15,9 +15,11 @@ static void system_led_task(void * args ){
     gpio_set_pull_mode( GPIO_NUM_48 , GPIO_PULLUP_PULLDOWN );
     while(1){
         gpio_set_level( GPIO_NUM_48 , 1 );
-        vTaskDelay( 100/portTICK_PERIOD_MS );
+        ESP_LOGI(TAG,"LED_ON");
+        vTaskDelay( 1000/portTICK_PERIOD_MS );
         gpio_set_level( GPIO_NUM_48 , 0 );
-        vTaskDelay( 100/portTICK_PERIOD_MS );
+        ESP_LOGI(TAG , "LED_OFF" );
+        vTaskDelay( 1000/portTICK_PERIOD_MS );
     }
 }
 
@@ -37,15 +39,19 @@ static void usb_task(void* args){
 
 void app_main(void)
 {   
-    bsp_nvs_init();
-    if( bsp_nvs_check() == ESP_OK ){
-        ESP_LOGI(TAG , "nvs ok");
-    }
+    xTaskCreate(
+        usb_task,
+        "usb",
+        4 * 1024,
+        NULL,
+        12,
+        usb_taskhandle
+    );
 
     xTaskCreate( 
         system_led_task ,
         "sys led tick",
-        1 * 1024 , 
+        2 * 1024 , 
         NULL,
         1,
         &system_led_taskhandle

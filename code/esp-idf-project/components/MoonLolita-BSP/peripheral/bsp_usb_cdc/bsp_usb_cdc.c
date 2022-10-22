@@ -1,6 +1,7 @@
 #include "bsp_usb_cdc.h"
 #include "tinyusb.h"
 #include "tusb_cdc_acm.h"
+#include "tusb_console.h"
 
 #include "esp_log.h"
 
@@ -56,6 +57,9 @@ esp_err_t bsp_usb_cdc_init(){
         ESP_LOGE(TAG,"cdc init error!");
         return ret;
     }
+
+    //log使用usb cdc打印
+    esp_tusb_init_console(TINYUSB_CDC_ACM_0);
 
     uint8_t dump = 0xff;
 
