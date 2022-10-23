@@ -16,19 +16,21 @@
 #define LCD_PIXEL_CLOCK_HZ     (8 * 1000 * 1000)
 #define LCD_BK_LIGHT_ON_LEVEL      1
 #define LCD_BK_LIGHT_OFF_LEVEL !LCD_BK_LIGHT_ON_LEVEL
-#define LCD_PIN_NUM_DATA0          8
-#define LCD_PIN_NUM_DATA1          3
-#define LCD_PIN_NUM_DATA2          11
+#define LCD_PIN_NUM_DATA0          3
+#define LCD_PIN_NUM_DATA1          46
+#define LCD_PIN_NUM_DATA2          12
 #define LCD_PIN_NUM_DATA3          10
-#define LCD_PIN_NUM_DATA4          9
-#define LCD_PIN_NUM_DATA5          12
-#define LCD_PIN_NUM_DATA6          46
-#define LCD_PIN_NUM_DATA7          13
-#define LCD_PIN_NUM_PCLK           16
-#define LCD_PIN_NUM_CS             17
-#define LCD_PIN_NUM_DC             40
+#define LCD_PIN_NUM_DATA4          11
+#define LCD_PIN_NUM_DATA5          13
+#define LCD_PIN_NUM_DATA6          9
+#define LCD_PIN_NUM_DATA7          14
+#define LCD_PIN_NUM_PCLK           17
+#define LCD_PIN_NUM_CS             16
+#define LCD_PIN_NUM_DC             15       //RS->测试板标号
 #define LCD_PIN_NUM_RST            18
-#define LCD_PIN_NUM_BK_LIGHT       14
+#define LCD_PIN_NUM_BK_LIGHT       8
+
+//mcu8080接口:RW引脚在没有使用时要接入3.3v接入写模式
 
 // The pixel number in horizontal and vertical
 #define LCD_H_RES              240
@@ -142,9 +144,9 @@ static void st7789_init(){
     ESP_LOGI(TAG, "ST7789 reset");
     esp_lcd_panel_reset(panel_handle);
     esp_lcd_panel_init(panel_handle);
-    esp_lcd_panel_invert_color(panel_handle, true);
+    esp_lcd_panel_invert_color(panel_handle, false);
     // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
-    esp_lcd_panel_set_gap(panel_handle, 0, 20);
+    esp_lcd_panel_set_gap(panel_handle, 0, 0);
     ESP_LOGI(TAG, "Turn on LCD backlight");
     gpio_set_level(LCD_PIN_NUM_BK_LIGHT, LCD_BK_LIGHT_ON_LEVEL);
 }
