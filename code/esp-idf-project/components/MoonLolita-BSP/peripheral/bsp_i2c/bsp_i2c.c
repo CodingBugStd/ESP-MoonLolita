@@ -3,9 +3,9 @@
 
 #define TAG "bsp_i2c"
 
-#define I2C_MASTER_NUM      I2C_NUM_0
-#define I2C_MASTER_SDA_IO   GPIO_NUM_0
-#define I2C_MASTER_SCL_IO   GPIO_NUM_0
+#define I2C_MASTER_NUM      I2C_NUM_1
+#define I2C_MASTER_SDA_IO   GPIO_NUM_39
+#define I2C_MASTER_SCL_IO   GPIO_NUM_40
 #define I2C_MASTER_FREQ_HZ  400*1000
 #define I2C_TIMEOUT_MS      100
 
@@ -26,6 +26,8 @@ esp_err_t bsp_i2c_init(void)
         .scl_pullup_en = GPIO_PULLUP_ENABLE,
         .master.clk_speed = I2C_MASTER_FREQ_HZ,
     };
+
+    ESP_LOGI(TAG,"i2c init");
 
     i2c_param_config(i2c_master_port, &conf);
 

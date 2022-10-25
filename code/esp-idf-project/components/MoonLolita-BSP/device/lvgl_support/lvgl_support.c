@@ -1,12 +1,13 @@
 #include "lvgl_support.h"
+#include "gt911.h"
 
 #include "esp_log.h"
 #include "driver/gpio.h"
 #include "esp_lcd_panel_io.h"
 #include "esp_lcd_panel_vendor.h"   //使用idf原生st7789驱动
 #include "esp_lcd_panel_ops.h"
-#include "freertos\FreeRTOS.h"
-#include "freertos\task.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 #define TAG "lvgl_support"
 
@@ -32,6 +33,11 @@
 
 //mcu8080接口:RW引脚在没有使用时要接入3.3v接入写模式
 
+#define GT911_RST_PIN_NUM   41
+//#define GT911_INT_PIN_NUM   0 //直接接地 放弃中断
+
+
+
 // The pixel number in horizontal and vertical
 #define LCD_H_RES              240
 #define LCD_V_RES              320
@@ -47,6 +53,9 @@ static esp_timer_handle_t       lvgl_tick_timer = NULL;
 static lv_disp_draw_buf_t disp_buf; // contains internal graphic buffer(s) called draw buffer(s)
 static lv_disp_drv_t disp_drv;      // contains callback functions
 static lv_disp_t* disp = NULL;
+
+static lv_indev_drv_t indev_drv;
+static lv_indev_t*    indev = NULL;
 
 static bool bsp_notify_lvgl_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel_io_event_data_t *edata, void *user_ctx)
 {
@@ -140,6 +149,16 @@ static void peripheral_init(){
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
 }
 
+static void gt911_init(){
+    ESP_LOGI(TAG,"gt911 init");
+    gpio_set_direction( GT911_RST_PIN_NUM , GPIO_MODE_OUTPUT );
+    gpio_set_level( GT911_RST_PIN_NUM , 0 );
+    vTaskDelay(1);
+    gpio_set_level( GT911_RST_PIN_NUM , 1 );
+    vTaskDelay(1);
+    GT911_Send_Config(0);
+}
+
 static void st7789_init(){
     ESP_LOGI(TAG, "ST7789 reset");
     esp_lcd_panel_reset(panel_handle);
@@ -161,6 +180,19 @@ static void lv_buff_init(){
     assert(buf2);
     // initialize LVGL draw buffers
     lv_disp_draw_buf_init(&disp_buf, buf1, buf2, LCD_H_RES * 20);
+}
+
+static void bsp_lvgl_indev_read_cb( lv_indev_drv_t *drv, lv_indev_data_t *data ){
+    //data->state = LV_INDEV_STATE_RELEASED;
+    
+}
+
+static void lv_indev_register(){
+    lv_indev_drv_init(&indev_drv);              /*Basic initialization*/
+    indev_drv.type = LV_INDEV_TYPE_POINTER;                 /*See below.*/
+    indev_drv.read_cb = bsp_lvgl_indev_read_cb;         /*See below.*/
+    /*Register the driver in LVGL and save the created input device object*/
+    indev = lv_indev_drv_register(&indev_drv);
 }
 
 static void lv_disp_register(){
@@ -185,14 +217,14 @@ static void lv_inc_timer_init(){
     ESP_ERROR_CHECK(esp_timer_start_periodic(lvgl_tick_timer, LVGL_TICK_PERIOD_MS * 1000));
 }
 
-#include "string.h"
-
 void lvgl_support_init(){
     peripheral_init();
     st7789_init();
+    gt911_init();
     lv_init();
     lv_buff_init();
     lv_disp_register();
+    lv_indev_register();
     lv_inc_timer_init();
 
     //首先执行一次lv_timer_handler!
@@ -208,4 +240,5 @@ void lvgl_support_init(){
         &bsp_lvgl_handle_taskHandle
     );
 }
+
 

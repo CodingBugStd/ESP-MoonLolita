@@ -29,6 +29,7 @@ void app_main(void)
 {   
     ESP_LOGW(TAG,"This version under development.");
 
+    bsp_i2c_init();
     lvgl_support_init();
 
     xTaskCreate( 

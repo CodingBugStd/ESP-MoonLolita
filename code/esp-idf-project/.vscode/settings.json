@@ -26,7 +26,8 @@
         "freertos.h": "c",
         "st7789.h": "c",
         "esp_lcd_panel_vendor.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "gt911.h": "c"
     },
     "idf.portWin": "COM7",
     "idf.flashType": "UART"
