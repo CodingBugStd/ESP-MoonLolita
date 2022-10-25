@@ -49,11 +49,5 @@ void GT911_Send_Config(uint8_t mode);		//配置初始化ft911
 void Software_Reset(uint8_t gt_SR_type);//复位或者不复位gt911
 void gt911_Scanf(void);									//扫描触摸模块
 
-
-
-
-
-
-
 #endif /*__GT911_H_*/
 

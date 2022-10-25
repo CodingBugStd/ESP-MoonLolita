@@ -25,6 +25,8 @@ static void system_led_task(void * args ){
     }
 }
 
+#include "./device/lvgl_support/gt911.h"
+
 void app_main(void)
 {   
     ESP_LOGW(TAG,"This version under development.");
@@ -40,6 +42,17 @@ void app_main(void)
         1,
         &system_led_taskhandle
     );
+
+    Software_Reset(1);
+    vTaskDelay(10);
+    Software_Reset(0);
+    vTaskDelay(1);
+
+    while(1){
+        gt911_Scanf();
+        ESP_LOGI( TAG , "%d %d" , User_Touch.Touch_XY->X_Point , User_Touch.Touch_XY->Y_Point );
+        vTaskDelay( 500 / portTICK_PERIOD_MS );
+    }
 
     vTaskDelay(2000 / portTICK_PERIOD_MS );
 

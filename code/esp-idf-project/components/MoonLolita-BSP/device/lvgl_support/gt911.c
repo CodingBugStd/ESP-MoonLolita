@@ -7,7 +7,7 @@
 
 #define TAG "gt911"
 
-#define GT911_ADDR  	0XBA	//设备地址 //0X28 //0XBA
+#define GT911_ADDR  	0XBA>>1	//设备地址 //0X28 //0XBA
 
 //GT911 部分寄存器定义 
 #define GT_CTRL_REG 	0X8040   	//GT911控制寄存器
@@ -55,15 +55,18 @@ Touch_Struct	User_Touch;
 
 //private
 void GT911_WriteReg(uint16_t _usRegAddr, uint8_t *_pRegBuf, uint8_t _ucLen){
-    uint8_t buf[ _ucLen + 2 ] ;
-    *((uint16_t*)buf ) = _usRegAddr;
+    uint8_t buf[ _ucLen ] ;
+    //*((uint16_t*)buf ) = _usRegAddr;
     memcpy( (void*)(buf+2) , _pRegBuf , _ucLen );
     i2c_write( GT911_ADDR , buf , _ucLen + 2 );
     
 }
 
 void GT911_ReadReg(uint16_t _usRegAddr, uint8_t *_pRegBuf, uint8_t _ucLen){
-    i2c_write_read( GT911_ADDR , &_usRegAddr , 2 , _pRegBuf , _ucLen );
+	uint8_t buf[2];
+	buf[0] = _usRegAddr >> 8;
+	buf[1] = _usRegAddr * 0x00FF;
+    i2c_write_read( GT911_ADDR , buf , 2 , _pRegBuf , _ucLen );
 }
 
 // void GT911_WriteReg(uint16_t _usRegAddr, uint8_t *_pRegBuf, uint8_t _ucLen)
@@ -83,7 +86,7 @@ void GT911_ReadReg(uint16_t _usRegAddr, uint8_t *_pRegBuf, uint8_t _ucLen){
 void GT911_Send_Config(uint8_t mode)
 {
 	uint8_t buf[2];
-	
+	 
 	buf[0] = 0;
 	buf[1] = mode;	//是否写入到GT9147 FLASH?  即是否掉电保存
 	for(uint8_t i=0; i<sizeof(GT9147_CFG_TBL); i++)
@@ -122,15 +125,7 @@ void Software_Reset(uint8_t gt_SR_type)
 	参数1：
 */
 void gt911_Scanf(void)
-{
-	static uint8_t timer_=0;
-	timer_++;
-	if(timer_<10)		//防止短时间多次进入判断
-	{
-		return;
-	}
-	timer_=0;
-	
+{	
 	uint8_t _temp;	//中间变量
 	
 	GT911_ReadReg(GT_GSTID_REG, &_temp, 1);//读0x814E寄存器
