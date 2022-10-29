@@ -168,8 +168,10 @@ static void lv_buff_init(){
 }
 
 static void bsp_lvgl_indev_read_cb( lv_indev_drv_t *drv, lv_indev_data_t *data ){
-    //data->state = LV_INDEV_STATE_RELEASED;
-    
+    data->state = LV_INDEV_STATE_RELEASED;
+    if( gt911_get_pos( (uint16_t*)&data->point.x , (uint16_t*)&data->point.y ) ){
+        data->state = LV_INDEV_STATE_PRESSED;
+    }
 }
 
 static void lv_indev_register(){

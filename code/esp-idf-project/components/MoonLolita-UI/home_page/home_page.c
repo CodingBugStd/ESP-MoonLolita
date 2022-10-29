@@ -1,5 +1,9 @@
 #include "home_page.h"
 
+#include "esp_log.h"
+
+#define TAG "home_page"
+
 static void lable_create( lv_obj_t *parent ){
     lv_label_t *label = NULL;
 
@@ -8,7 +12,8 @@ static void lable_create( lv_obj_t *parent ){
 }
 
 static void button_callback( lv_event_t * event ){
-    //printf("HelloWorld!\n");
+    // printf("HelloWorld!\n");
+    ESP_LOGI(TAG,"button press");
 }
 
 static void button_create( lv_obj_t * parent){
@@ -32,7 +37,7 @@ static void home_page_create(){
 
     screen = lv_img_create( NULL );
 
-    lv_img_set_src( screen , "A:sdcard/img/test.png" );
+    //lv_img_set_src( screen , "A:sdcard/img/test.png" );
 
     lable_create( screen );
     button_create( screen );

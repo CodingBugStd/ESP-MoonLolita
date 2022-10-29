@@ -36,7 +36,9 @@ static void system_led_task(void * args ){
     }
 }
 
-#include "./device/lvgl_support/gt911.h"
+static void btn_cb(lv_event_t * e){
+    ESP_LOGI(TAG,"button press");
+}
 
 void app_main(void)
 {   
@@ -45,14 +47,24 @@ void app_main(void)
     bsp_i2c_init();
     lvgl_support_init();
 
-    gt911_printf_info();
+    home_page_load();
 
-    uint16_t temp[2];
-    while( vTaskDelay( 50/portTICK_PERIOD_MS ) , 1 ){
-        if( gt911_get_pos(temp,temp+1) ){
-            ESP_LOGI(TAG,"x:%d y:%d",temp[0] , temp[1]);
-        }
-    }
+    // lv_obj_t *scr = lv_obj_create(NULL);
+
+    // lv_btn_t *btn = lv_btn_create( scr );
+    // lv_obj_set_align( btn , LV_ALIGN_CENTER );
+    // lv_obj_set_size( btn , 60 , 30  );
+    // lv_obj_set_style_bg_color( btn , lv_color_make(0,0,255) , LV_PART_MAIN );
+    // lv_obj_add_event_cb( btn , btn_cb , LV_EVENT_PRESSED , NULL );
+
+    // lv_scr_load(scr);
+
+    // uint16_t temp[2];
+    // while( vTaskDelay( 50/portTICK_PERIOD_MS ) , 1 ){
+    //     if( gt911_get_pos(temp,temp+1) ){
+    //         ESP_LOGI(TAG,"x:%d y:%d",temp[0] , temp[1]);
+    //     }
+    // }
 
     // vTaskDelay(2000 / portTICK_PERIOD_MS );
 
