@@ -49,23 +49,7 @@ void app_main(void)
 
     home_page_load();
 
-    // lv_obj_t *scr = lv_obj_create(NULL);
-
-    // lv_btn_t *btn = lv_btn_create( scr );
-    // lv_obj_set_align( btn , LV_ALIGN_CENTER );
-    // lv_obj_set_size( btn , 60 , 30  );
-    // lv_obj_set_style_bg_color( btn , lv_color_make(0,0,255) , LV_PART_MAIN );
-    // lv_obj_add_event_cb( btn , btn_cb , LV_EVENT_PRESSED , NULL );
-
-    // lv_scr_load(scr);
-
-    // uint16_t temp[2];
-    // while( vTaskDelay( 50/portTICK_PERIOD_MS ) , 1 ){
-    //     if( gt911_get_pos(temp,temp+1) ){
-    //         ESP_LOGI(TAG,"x:%d y:%d",temp[0] , temp[1]);
-    //     }
-    // }
-
+    //RGB测试
     // vTaskDelay(2000 / portTICK_PERIOD_MS );
 
     // lv_obj_t *page = lv_obj_create( NULL );
