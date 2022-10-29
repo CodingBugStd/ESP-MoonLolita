@@ -33,11 +33,6 @@
 
 //mcu8080接口:RW引脚在没有使用时要接入3.3v接入写模式
 
-#define GT911_RST_PIN_NUM   41
-//#define GT911_INT_PIN_NUM   0 //直接接地 放弃中断
-
-
-
 // The pixel number in horizontal and vertical
 #define LCD_H_RES              240
 #define LCD_V_RES              320
@@ -147,16 +142,6 @@ static void peripheral_init(){
         .bits_per_pixel = 16,
     };
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7789(io_handle, &panel_config, &panel_handle));
-}
-
-static void gt911_init(){
-    ESP_LOGI(TAG,"gt911 init");
-    gpio_set_direction( GT911_RST_PIN_NUM , GPIO_MODE_OUTPUT );
-    gpio_set_level( GT911_RST_PIN_NUM , 0 );
-    vTaskDelay(1);
-    gpio_set_level( GT911_RST_PIN_NUM , 1 );
-    vTaskDelay(1);
-    GT911_Send_Config(0);
 }
 
 static void st7789_init(){
