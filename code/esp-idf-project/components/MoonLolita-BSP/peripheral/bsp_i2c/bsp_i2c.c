@@ -38,7 +38,7 @@ esp_err_t bsp_i2c_init(void)
 esp_err_t i2c_write(uint8_t dev_addr , uint8_t* buf , size_t len){
     esp_err_t ret = i2c_master_write_to_device( I2C_MASTER_NUM , dev_addr , buf , len , I2C_TIMEOUT_MS / portTICK_RATE_MS );
     if( ret != ESP_OK){
-        ESP_LOGE(TAG,"i2c write err ! dev addr:%02X" , dev_addr );
+        ESP_LOGE(TAG,"i2c write err ! dev addr:0x%02X" , dev_addr );
     }
     return ret;
 }
@@ -46,7 +46,7 @@ esp_err_t i2c_write(uint8_t dev_addr , uint8_t* buf , size_t len){
 esp_err_t i2c_read(uint8_t dev_addr , uint8_t* buf , size_t len){
     esp_err_t ret = i2c_master_read_from_device( I2C_MASTER_NUM , dev_addr , buf, len , I2C_TIMEOUT_MS / portTICK_RATE_MS );
     if( ret != ESP_OK){
-        ESP_LOGE(TAG,"i2c read err ! dev addr:%02X" , dev_addr );
+        ESP_LOGE(TAG,"i2c read err ! dev addr:0x%02X" , dev_addr );
     }
     return ret;
 }
@@ -54,7 +54,7 @@ esp_err_t i2c_read(uint8_t dev_addr , uint8_t* buf , size_t len){
 esp_err_t i2c_write_read(uint8_t dev_addr , uint8_t*w_buf , size_t w_len , uint8_t*r_buf , size_t r_len){
     esp_err_t ret = i2c_master_write_read_device( I2C_MASTER_NUM, dev_addr, w_buf, w_len , r_buf, r_len, I2C_TIMEOUT_MS / portTICK_RATE_MS);
     if( ret != ESP_OK){
-        ESP_LOGE(TAG,"i2c write read err ! dev addr:%02X" , dev_addr );
+        ESP_LOGE(TAG,"i2c write read err ! dev addr:0x%02X" , dev_addr );
     }
     return ret;
 }
