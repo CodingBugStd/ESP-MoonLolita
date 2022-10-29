@@ -45,6 +45,8 @@ void app_main(void)
     bsp_i2c_init();
     lvgl_support_init();
 
+    gt911_printf_info();
+
     uint16_t temp[2];
     while( vTaskDelay( 50/portTICK_PERIOD_MS ) , 1 ){
         if( gt911_get_pos(temp,temp+1) ){
