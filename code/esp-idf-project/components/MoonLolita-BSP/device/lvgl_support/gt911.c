@@ -20,7 +20,7 @@
 
 //共183个寄存器
 #define GT911_CONFIG {\
-	0x35, 0x10, 0x01, 0x40, 0x01,  0x01, 0x00, 0x20, \
+	0x35, 0x10, 0x01, 0x40, 0x01,  0x01, 0x04, 0x20, \
 	0x01, 0x00, 0x28, 0x05, 0x50,  0x3C, 0x0F, 0x05,\
     0x00, 0x00, 0x00, 0x00, 0x00,  0x60, 0x00, 0x00,\
 	0x00, 0x00, 0x00, 0x89, 0x2A,  0x0B, 0x2D, 0x2B,\
@@ -74,23 +74,23 @@ static void gt911_hard_reset(){
     vTaskDelay(1);
 }
 
-//因为硬件设计时发生了短路，导致x坐标不正常，用这个函数修正
-static uint16_t gt911_x_correct(uint16_t x){
-	return 240 - x;
-}
+// //因为硬件设计时发生了短路，导致x坐标不正常，用这个函数修正
+// static uint16_t gt911_x_correct(uint16_t x){
+// 	return 240 - x;
+// }
 
-//因为硬件设计时发生了短路，导致y坐标不正常，用这个函数修正
-//0~58 133~201  58:68 -> 0.853 
-static uint16_t gt911_y_correct(uint16_t y){
-	float temp;
-	if( y < 59 ){
-		y *= 2.54;
-	}else{
-		y = 259 - y ;
-		y *= 2.54;
-	}
-	return y;
-}
+// //因为硬件设计时发生了短路，导致y坐标不正常，用这个函数修正
+// //0~58 133~201  58:68 -> 0.853 
+// static uint16_t gt911_y_correct(uint16_t y){
+// 	float temp;
+// 	if( y < 59 ){
+// 		y *= 2.54;
+// 	}else{
+// 		y = 259 - y ;
+// 		y *= 2.54;
+// 	}
+// 	return y;
+// }
 
 bool gt911_get_pos(uint16_t *x , uint16_t *y){
 	esp_err_t ret = ESP_FAIL;
@@ -113,8 +113,8 @@ bool gt911_get_pos(uint16_t *x , uint16_t *y){
 			*x |= (uint16_t)buf[1]<<8;
 			*y = buf[2];
 			*y |= (uint16_t)buf[3]<<8;
-			*x = gt911_x_correct(*x);
-			*y = gt911_y_correct(*y);
+			// *x = gt911_x_correct(*x);
+			// *y = gt911_y_correct(*y);
 			return true;
 		}
 		return false;

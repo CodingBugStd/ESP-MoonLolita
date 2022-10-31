@@ -30,6 +30,66 @@ static void button_create( lv_obj_t * parent){
     lv_obj_set_style_bg_opa( btn , LV_OPA_60 , 0 );
 
     lv_obj_add_event_cb( btn , button_callback , LV_EVENT_CLICKED , NULL );
+
+    //触摸测试
+    btn = lv_btn_create( parent );
+    btn_label = lv_label_create( btn );
+
+    lv_obj_set_pos( btn , 0 , 0 );
+    lv_obj_set_size( btn , 80 , 40 );
+
+    lv_label_set_text( btn_label , "test" );
+    lv_obj_set_align( btn_label , LV_ALIGN_CENTER );
+
+    lv_obj_set_style_bg_color( btn , lv_palette_main(LV_PALETTE_RED) , 0 );
+    lv_obj_set_style_bg_opa( btn , LV_OPA_60 , 0 );
+
+    lv_obj_add_event_cb( btn , button_callback , LV_EVENT_CLICKED , NULL );
+
+    //触摸测试
+    btn = lv_btn_create( parent );
+    btn_label = lv_label_create( btn );
+
+    lv_obj_set_pos( btn , 240 , 0 );
+    lv_obj_set_size( btn , 80 , 40 );
+
+    lv_label_set_text( btn_label , "test" );
+    lv_obj_set_align( btn_label , LV_ALIGN_CENTER );
+
+    lv_obj_set_style_bg_color( btn , lv_palette_main(LV_PALETTE_RED) , 0 );
+    lv_obj_set_style_bg_opa( btn , LV_OPA_60 , 0 );
+
+    lv_obj_add_event_cb( btn , button_callback , LV_EVENT_CLICKED , NULL );
+
+    //触摸测试
+    btn = lv_btn_create( parent );
+    btn_label = lv_label_create( btn );
+
+    lv_obj_set_pos( btn , 0 , 200 );
+    lv_obj_set_size( btn , 80 , 40 );
+
+    lv_label_set_text( btn_label , "test" );
+    lv_obj_set_align( btn_label , LV_ALIGN_CENTER );
+
+    lv_obj_set_style_bg_color( btn , lv_palette_main(LV_PALETTE_RED) , 0 );
+    lv_obj_set_style_bg_opa( btn , LV_OPA_60 , 0 );
+
+    lv_obj_add_event_cb( btn , button_callback , LV_EVENT_CLICKED , NULL );
+
+    //触摸测试
+    btn = lv_btn_create( parent );
+    btn_label = lv_label_create( btn );
+
+    lv_obj_set_pos( btn , 240 , 40 );
+    lv_obj_set_size( btn , 80 , 40 );
+
+    lv_label_set_text( btn_label , "test" );
+    lv_obj_set_align( btn_label , LV_ALIGN_CENTER );
+
+    lv_obj_set_style_bg_color( btn , lv_palette_main(LV_PALETTE_RED) , 0 );
+    lv_obj_set_style_bg_opa( btn , LV_OPA_60 , 0 );
+
+    lv_obj_add_event_cb( btn , button_callback , LV_EVENT_CLICKED , NULL );
 }
 
 static void home_page_create(){

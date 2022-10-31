@@ -34,8 +34,8 @@
 //mcu8080接口:RW引脚在没有使用时要接入3.3v接入写模式
 
 // The pixel number in horizontal and vertical
-#define LCD_H_RES              240
-#define LCD_V_RES              320
+#define LCD_H_RES              320
+#define LCD_V_RES              240
 // Bit number used to represent command and parameter
 #define LCD_CMD_BITS           8
 #define LCD_PARAM_BITS         8
@@ -111,7 +111,7 @@ static void peripheral_init(){
             LCD_PIN_NUM_DATA7,
         },
         .bus_width = 8,
-        .max_transfer_bytes = LCD_H_RES * 40 * sizeof(uint16_t)
+        .max_transfer_bytes = LCD_V_RES * 40 * sizeof(uint16_t)
     };
     ESP_ERROR_CHECK(esp_lcd_new_i80_bus(&bus_config, &i80_bus));
 
@@ -148,7 +148,9 @@ static void st7789_init(){
     ESP_LOGI(TAG, "ST7789 reset");
     esp_lcd_panel_reset(panel_handle);
     esp_lcd_panel_init(panel_handle);
-    esp_lcd_panel_invert_color(panel_handle, false);
+    esp_lcd_panel_swap_xy( panel_handle , true );       //配置为横屏模式
+    esp_lcd_panel_mirror( panel_handle , true , false );
+    esp_lcd_panel_invert_color(panel_handle, false);    //使用lvgl的颜色字节倒置
     // the gap is LCD panel specific, even panels with the same driver IC, can have different gap value
     esp_lcd_panel_set_gap(panel_handle, 0, 0);
     ESP_LOGI(TAG, "Turn on LCD backlight");
@@ -159,12 +161,12 @@ static void lv_buff_init(){
     ESP_LOGI(TAG, "Initialize LVGL library");
     // alloc draw buffers used by LVGL
     // it's recommended to choose the size of the draw buffer(s) to be at least 1/10 screen sized
-    lv_color_t *buf1 = heap_caps_malloc(LCD_H_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    lv_color_t *buf1 = heap_caps_malloc(LCD_V_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf1);
-    lv_color_t *buf2 = heap_caps_malloc(LCD_H_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    lv_color_t *buf2 = heap_caps_malloc(LCD_V_RES * 20 * sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf2);
     // initialize LVGL draw buffers
-    lv_disp_draw_buf_init(&disp_buf, buf1, buf2, LCD_H_RES * 20);
+    lv_disp_draw_buf_init(&disp_buf, buf1, buf2, LCD_V_RES * 20);
 }
 
 static void bsp_lvgl_indev_read_cb( lv_indev_drv_t *drv, lv_indev_data_t *data ){
