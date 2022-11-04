@@ -35,6 +35,8 @@ static void system_led_task(void * args ){
     }
 }
 
+#include "./device/lvgl_support/gt911.h"
+
 void app_main(void)
 {   
     ESP_LOGW(TAG,"This version under development.");

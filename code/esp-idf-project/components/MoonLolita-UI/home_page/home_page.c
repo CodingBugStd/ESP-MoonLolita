@@ -80,7 +80,7 @@ static void button_create( lv_obj_t * parent){
     btn = lv_btn_create( parent );
     btn_label = lv_label_create( btn );
 
-    lv_obj_set_pos( btn , 240 , 40 );
+    lv_obj_set_pos( btn , 240 , 200 );
     lv_obj_set_size( btn , 80 , 40 );
 
     lv_label_set_text( btn_label , "test" );
