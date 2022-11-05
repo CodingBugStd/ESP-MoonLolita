@@ -1,3 +1,11 @@
+/*
+ * @Author: 没人要的野指针
+ * @Date: 2022-09-25 14:16:11
+ * @LastEditors: 没人要的野指针
+ * @LastEditTime: 2022-11-06 01:48:25
+ * @Description: 对idf的nvs的二次封装，bsp_nvs中默认使用"bsp"名字空间。
+ * Copyright (c) 2022 CodingBugStd, All Rights Reserved. 
+ */
 #ifndef _BSP_NVS_H_
 #define _BSP_NVS_H_
 

@@ -24,7 +24,7 @@ esp_err_t bsp_nvs_init(){
         return ESP_FAIL;
     }
     if( nvs_open( NVS_NAMESPACE , NVS_READWRITE , &bsp_nvs_handle ) != ESP_OK ){
-        ESP_LOGE(TAG,"nvs namespace open error!");
+        ESP_LOGE(TAG,"nvs namespace open error! , nvs namespace : \"%s\" " , NVS_NAMESPACE );
         bsp_nvs_handle = NULL;
         return ESP_FAIL;
     }
@@ -33,6 +33,7 @@ esp_err_t bsp_nvs_init(){
 
 esp_err_t bsp_nvs_deinit(){
     bsp_nvs_handle = NULL;
+    nvs_close( bsp_nvs_handle );
     return nvs_flash_deinit();
 }
 
@@ -62,6 +63,7 @@ esp_err_t bsp_nvs_check(){
     size_t len;
     bsp_nvs_set( key , &test_value , 1 );
     bsp_nvs_get( key , &test_out , &len );
+    bsp_nvs_delete( key );
     if( test_value != test_out || len != 1){
         return ESP_FAIL;
     }else{
