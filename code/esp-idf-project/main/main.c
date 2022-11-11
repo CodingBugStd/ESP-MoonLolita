@@ -1,3 +1,11 @@
+/*
+ * @Author: 没人要的野指针
+ * @Date: 2022-11-04 00:12:34
+ * @LastEditors: 没人要的野指针 https://github.com/CodingBugStd
+ * @LastEditTime: 2022-11-12 01:07:59
+ * @Description: 
+ * Copyright (c) 2022 CodingBugStd, All Rights Reserved. 
+ */
 #include <stdio.h>
 #include "esp_log.h"
 #include "freertos\FreeRTOS.h"
@@ -5,7 +13,6 @@
 
 #include "moon_lolita_board_v1_support.h"
 #include "moon_lolita_ui.h"
-#include "mqtt.h"
 #include "lvgl.h"
 
 #define TAG "Moon Lolita"
@@ -35,16 +42,18 @@ static void system_led_task(void * args ){
     }
 }
 
-#include "./device/lvgl_support/gt911.h"
-
 void app_main(void)
 {   
     ESP_LOGW(TAG,"This version under development.");
 
-    bsp_i2c_init();
-    lvgl_support_init();
+    bsp_wifi_init();
+    bsp_wifi_station_connect( "TP-LINK_1EC2" , "CodingBugStd" );
 
-    home_page_load();
+    // bsp_nvs_init();
+    // bsp_i2c_init();
+    // lvgl_support_init();
+
+    // home_page_load();
 
     while( vTaskDelay(1) , 1 );
 }
